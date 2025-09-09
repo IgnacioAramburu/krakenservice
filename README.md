@@ -44,3 +44,45 @@ The response shall constitute JSON of the following structure:
 The public Kraken API might be used to retrieve the above LTP information
 [API Documentation](https://docs.kraken.com/rest/#tag/Spot-Market-Data/operation/getTickerInformation)
 (The values of the last traded price is called “last trade closed”)
+
+# Solution
+
+## Build and Run with Docker
+
+You can build and run the containerized service using Docker and with the provided commands in the Makefile:
+
+(Service is called krakenservice as container name)
+
+### Build the Docker image
+```sh
+make docker-build
+```
+
+### Run the service in Docker
+```sh
+make docker-run
+```
+This will start the service and expose it on port 8080.
+
+### Stop the running Docker container
+```sh
+make docker-stop
+```
+
+### Remove the Docker image and local binary
+```sh
+make docker-clean
+```
+
+### Build the Go binary locally (optional)
+```sh
+make build
+```
+
+## Summary of Makefile Commands
+
+- `make build` – Build the Go binary locally
+- `make docker-build` – Build the Docker image
+- `make docker-run` – Run the Docker container (exposes port 8080)
+- `make docker-stop` – Stop the running container
+- `make docker-clean` – Remove the Docker image and local binary
