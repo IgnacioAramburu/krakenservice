@@ -24,6 +24,8 @@ type service struct {
 func (s *service) GetLastTradedPrice(ctx context.Context, pairInfo string) (ltp_list *LastTradedPriceList, errInfo *_errors.ErrorInformation) {
 	tradeCodes, err := s.getTradeCodes(pairInfo)
 
+	s.log.Print(tradeCodes)
+
 	if err != nil {
 		s.log.Println(err)
 		return nil, &_errors.ErrorInformation{
@@ -63,10 +65,15 @@ func (s *service) GetLastTradedPrice(ctx context.Context, pairInfo string) (ltp_
 		pair, ok := s.krakenConfig.TradeCodesMap[tradeCode]
 
 		if !ok {
+			//Prevents tradeCodes not included in the TradeCodesMap to be added
+			//to the final result. This codes may have been used for
+			//calculating derivativeTradeCodes not available in kraken
+			//but could have been calculated by tradeChain defined in the pairMap
+			//for the requested pair from the user instead
 			continue
 		}
 
-		if strings.Contains(pairInfo, pair) { //Only add requested pairs
+		if strings.Contains(pairInfo, pair) || len(pairInfo) == 0 { //Only add requested pairs
 			ltpList = append(ltpList, LastTradedPricePair{
 				Pair:   pair,
 				Amount: price,

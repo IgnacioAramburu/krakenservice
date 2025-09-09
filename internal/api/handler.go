@@ -20,10 +20,12 @@ func (h *Handler) LastTradePriceHandler(w http.ResponseWriter, r *http.Request) 
 
 	query := r.URL.Query()
 
-	log.Printf("%s %s -> %s", r.Method, r.URL.Path, r.URL.RawQuery)
+	h.log.Printf("%s %s -> %s", r.Method, r.URL.Path, r.URL.RawQuery)
 
 	pairInfo := ""
-	if pairQuery, ok := query["pair"]; ok && len(pairQuery) > 0 {
+	pairQuery, ok := query["pair"]
+
+	if ok && len(pairQuery) > 0 {
 		pairInfo = strings.TrimSpace(pairQuery[0])
 	}
 

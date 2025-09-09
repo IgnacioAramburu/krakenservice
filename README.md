@@ -79,6 +79,17 @@ make docker-clean
 make build
 ```
 
+## How to make API request
+
+Call the API this way:
+
+<domain>/api/v1/ltp?pair=<pairs>
+
+* domain: domain where is hosted. If run locally domain is http://127.0.0.1 (default port is 8080)
+* pairs: pair="<pair1>,...,<pairn>",being pair any of these supported pairs: "BTC/USD", "BTC/EUR", "BTC/CHF". You can request one or many pairs at the same time as you wish.
+
+if <pairs> is empty string or no pairs in query params, it will return the last trade price or all supported pairs
+
 ## Summary of Makefile Commands
 
 - `make build` – Build the Go binary locally
